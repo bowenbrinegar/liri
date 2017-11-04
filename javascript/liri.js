@@ -10,6 +10,7 @@ const showTweets = run.tweets;
 const showSong = run.song;
 const showMovie = run.movie;
 
+
 var randomizer;
 
 	function prompt() {
@@ -17,7 +18,7 @@ var randomizer;
 				type: "list",
 				message: "What do you want to do?",
 				name: "choices",
-				choices: ["song", "movie", "tweets", "random", "exit"]
+				choices: ["song", "movie", "tweets", "roll dice", "random", "exit"]
 		}).then(function(res) {
 				switch (res.choices) 
 							{
@@ -29,13 +30,16 @@ var randomizer;
 							        break;
 							    case "tweets":
 							    		new showTweets(twitter);
-							    		setTimeout(prompt, 3000);
+							    		setTimeout(prompt, 1000);
 							        break;
+							    case "roll dice":
+							    		dice()
+							        break;   
 							    case "random":
 							    		computerChoice();
 							        break;   
 							    case "exit":
-							    		console.log("Thank you! Come again!")
+							    		console.log(`\n\nThank you! Come again!\n\n`);
 							        break;        
 							    default:
 							        break;
@@ -46,6 +50,7 @@ var randomizer;
 	function movieSearch() {
 		if (randomizer) {
 			new showMovie(omdb, 'back to the future');	
+			setTimeout(prompt, 1000);
 		} else {
 			inquirer.prompt({
 				type: "input",
@@ -53,11 +58,10 @@ var randomizer;
 				name: "movie",
 			}).then(function(res) {
 					new showMovie(omdb, res.movie);
-				
+					setTimeout(prompt, 1000);
 			});
 		}
-		randomizer = false;
-		setTimeout(prompt, 3000);
+		randomizer = false;	
 	}
 	
 	function songSearch() {
@@ -73,11 +77,16 @@ var randomizer;
 			});
 		}	
 		randomizer = false;
-		setTimeout(prompt, 3000);
+		setTimeout(prompt, 1000);
+	}
+
+	function dice() {
+		run.dice()
+		setTimeout(prompt, 1000);
 	}
 
 	function random() {
-	  var functionNumber  = ['songSearch', 'movieSearch'];
+	  var functionNumber  = ['songSearch', 'movieSearch', 'dice'];
 	  var x = functionNumber[Math.floor(Math.random() * functionNumber.length)];
 	  return x;
 	};

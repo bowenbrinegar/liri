@@ -7,9 +7,11 @@ var ShowTweets = function(key) {
 	client.get('statuses/user_timeline', function(error, tweets, response) {
 	  if(error) console.log(error)
 	  if (!error) {
+	  	console.log(`\n\n`)
 	  	for (var i = 0; i < tweets.length; i++) {
 	  		console.log(`Tweet #${[i+1]}: ${tweets[i].text}`);
 	  	}
+	  	console.log(`\n\n`)
 	  }
 	});
 }
@@ -20,7 +22,8 @@ var ShowSong = function(key, input) {
 	  .search({ type: 'track', query: input })
 	  .then(function(response) {
 	 		var res = response.tracks.items[0];
-	 		var logged = `\nArtist: ${res.album.artists[0].name}
+	 		var logged = `\n
+	 									\nArtist: ${res.album.artists[0].name}
 	 									\nTitle: ${res.name}
 	 									\nPreview: ${res.album.external_urls.spotify}
 	 									\nAlbum: ${res.album.name}
@@ -38,7 +41,8 @@ var ShowMovie = function(key, input) {
 	request(url, function(error, response, body) {
 	  if (!error && response.statusCode === 200) {
 	  	var res = JSON.parse(body);
-	  	var logged =  `\nTitle: ${res.Title}
+	  	var logged =  `\n
+	  									\nTitle: ${res.Title}
 							 			  \nYear: ${res.Year}
 							 				\nIMDB Rating: ${res.Ratings[0].Value}
 							 				\nRT Rating: ${res.Ratings[1].Value}
@@ -53,6 +57,14 @@ var ShowMovie = function(key, input) {
 	});
 }
 
+var RollDice = function() {
+	let one = Math.floor(Math.random() * 6) + 1;
+	let two = Math.floor(Math.random() * 6) + 1;
+	console.log(`\n\nfirst dice: ${one}, second dice: ${two}
+							\ntotal: ${one + two} \n\n`);
+}
+
 exports.tweets = ShowTweets;
 exports.song = ShowSong;
 exports.movie = ShowMovie;
+exports.dice = RollDice;
